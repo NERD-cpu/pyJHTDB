@@ -187,7 +187,7 @@ int getSphericalBoundedBline(
     // traj will contain all the trajectories, and traj_length will contain the lengths of all trajectories
     // the shape of traj is assumed to be (number of particles, allocated_traj_length, 3)
     int p, s;
-    float bsize, rad0, rad1, stmp, xtmp, ytmp, ztmp, valtmp;
+    float bsize, _rad0, _rad1, stmp, xtmp, ytmp, ztmp, valtmp;
     float (*x)[3];
 	float y[1][3];
 	float bfield0[1][3];
@@ -224,7 +224,7 @@ int getSphericalBoundedBline(
             x[1][0] = x[0][0] + .5*ds*(bfield0[0][0] + bfield1[0][0]);
             x[1][1] = x[0][1] + .5*ds*(bfield0[0][1] + bfield1[0][1]);
             x[1][2] = x[0][2] + .5*ds*(bfield0[0][2] + bfield1[0][2]);
-            if ((rad1 = sqrt((x[1][0] - ox)*(x[1][0] - ox)
+            if ((_rad1 = sqrt((x[1][0] - ox)*(x[1][0] - ox)
                            + (x[1][1] - oy)*(x[1][1] - oy)
                            + (x[1][2] - oz)*(x[1][2] - oz))) > radius)
             {
@@ -292,7 +292,7 @@ int getSphericalBoundedBlineDebug(
     // traj will contain all the trajectories, and traj_length will contain the lengths of all trajectories
     // the shape of traj is assumed to be (number of particles, allocated_traj_length, 3)
     int p, s;
-    float bsize, rad0, rad1, stmp, xtmp, ytmp, ztmp, valtmp;
+    float bsize, _rad0, _rad1, stmp, xtmp, ytmp, ztmp, valtmp;
     float (*x)[3];
 	float bfield0[1][3];
 
@@ -307,17 +307,17 @@ int getSphericalBoundedBlineDebug(
         x = traj + p*(maxsteps+1);
         for (s = 1; s <= maxsteps; s++)
         {
-            rad0 = sqrt((x[0][0] - ox)*(x[0][0] - ox)
+            _rad0 = sqrt((x[0][0] - ox)*(x[0][0] - ox)
                       + (x[0][1] - oy)*(x[0][1] - oy)
                       + (x[0][2] - oz)*(x[0][2] - oz));
             getMagneticFieldDebug(authToken, dataset, time, spatial, temporal, 1, x, bfield0);
             x[1][0] = x[0][0] + ds*bfield0[0][0];
             x[1][1] = x[0][1] + ds*bfield0[0][1];
             x[1][2] = x[0][2] + ds*bfield0[0][2];
-            rad1 = sqrt((x[1][0] - ox)*(x[1][0] - ox)
+            _rad1 = sqrt((x[1][0] - ox)*(x[1][0] - ox)
                       + (x[1][1] - oy)*(x[1][1] - oy)
                       + (x[1][2] - oz)*(x[1][2] - oz));
-            if (rad1 > radius)
+            if (_rad1 > radius)
             {
                 //rad0 = sqrt((x[0][0] - ox)*(x[0][0] - ox)
                 //          + (x[0][1] - oy)*(x[0][1] - oy)
